@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 
+
 @Controller
 public class ControMain {
     
@@ -19,5 +20,13 @@ public class ControMain {
         return "error";
     }
     
-
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+    
+    @GetMapping("/acerca")
+    public String acerca() {
+        return "acerca";
+    }
 }

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{plantilla/fragmentos.html :: headfiles}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div th:replace="plantilla/fragmentos.html :: navigation"></div>
+
+        <h3>Sobre Pistas deportivas</h3>
+
+        <div class="card" style="width: 18rem;">
+            <img src="img/DALLE-PistasDeportivas.jpg" class="card-img-top" alt="Pistas Deportivas">
+            <div class="card-body">
+              <h5 class="card-title">Proyecto de ejemplo</h5>
+              <p class="card-text">Aprendiendo Spring por ejemplos. Ejemplo de desarrollo fullstack con Spring Boot Web.</p>
+              <a href="https://gitlab.iesvirgendelcarmen.com/juangu/adt05-ejercicio-clase-pistas-deportivas" class="btn btn-primary">Ir al repositorio...</a>
+            </div>
+          </div>
+
+        <div th:replace="plantilla/fragmentos.html ::footer"></div>
+    </div>
+</body>
+</html>
