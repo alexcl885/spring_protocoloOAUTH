@@ -39,48 +39,60 @@ public class ConfiguracionSeguridad {
                 // Con Spring Security 6.2 y 7: usando Lambda DSL
 
                 return http
-                        .authorizeHttpRequests((requests) -> requests
-                                .requestMatchers("/webjars/**", "/img/**", "/css/**", "/js/**", 
-                                        "/register/**", "/ayuda/**", "/login", 
-                                        "/denegado", "/error", "/acerca")
-                                .permitAll() 
-                                .requestMatchers("/admin/**", "/admin/*/**" , "/admin/*/*/**", "/admin/*/*/*/*/*/**",
-                                    "/horario/**", "/horario/*/**" , "/horario/*/*/**", "/horario/*/*/*/*/*/**",
-                                    "/instalacion/**", "/instalacion/*/**" , "/instalacion/*/*/**", "/instalacion/*/*/*/*/*/**")
-                                //.authenticated()
-                                .hasAuthority("ADMIN")
-                                .requestMatchers("/pedidos/**", "/pedidos/*/**", "/pedidos/*/*/**", "/pedidos/*/*/*/**", "/pedidos/*/*/*/*/**")
-                                //.authenticated()
-                                .hasAuthority("OPERARIO")
-                                .requestMatchers("/mis-reservas/**", "/mis-reservas/*/**", 
-                                    "/reservar/**", "/reservar/*/**",
-                                    "/mis-datos/**", "/mis-datos/*/**","/mis-datos/*/*/**","/mis-datos/*/*/*/**")
-                                //.authenticated()
-                                .hasAuthority("USUARIO")
-                        //        .anyRequest().permitAll()
-                        // ).headers(headers -> headers
-                        //         .frameOptions(frameOptions -> frameOptions
-                        //                 .sameOrigin())
-                        // ).sessionManagement((session) -> session
-                        //         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                        ).exceptionHandling((exception)-> exception.
-                                accessDeniedPage("/denegado") )
-                        .formLogin((formLogin) -> formLogin
-                                .loginPage("/login")
-                                //.defaultSuccessUrl("/")
+                .authorizeHttpRequests((requests) -> requests
+                                .requestMatchers("/webjars/**", "/img/**", "/css/**", "/js/**",
+                                                "/register/**", "/ayuda/**", "/login",
+                                                "/denegado", "/error", "/acerca")
                                 .permitAll()
-                        ).rememberMe(
-                                Customizer.withDefaults()
-                        ).logout((logout) -> logout
+                                .requestMatchers("/horario", "/instalacion", "/horario/instalacion/**")
+                                .authenticated()
+                                .requestMatchers("/admin/**", "/admin/*/**", "/admin/*/*/**",
+                                                "/admin/*/*/*/*/*/**",
+                                                "/horario/*/**", "/horario/*/*/**",
+                                                "/horario/*/*/*/*/*/**",
+                                                "/instalacion/*/**", "/instalacion/*/*/**",
+                                                "/instalacion/*/*/*/*/*/**")
+                                // .authenticated()
+                                .hasAuthority("ADMIN")
+                                .requestMatchers("/pedidos/**", "/pedidos/*/**", "/pedidos/*/*/**",
+                                                "/pedidos/*/*/*/**", "/pedidos/*/*/*/*/**")
+                                // .authenticated()
+                                .hasAuthority("OPERARIO")
+                                .requestMatchers("/mis-reservas/**", "/mis-reservas/*/**",
+                                                "/reservar/**", "/reservar/*/**",
+                                                "/mis-datos/**", "/mis-datos/*/**", "/mis-datos/*/*/**",
+                                                "/mis-datos/*/*/*/**")
+                                // .authenticated()
+                                .hasAuthority("USUARIO")
+                // .anyRequest().permitAll()
+                // ).headers(headers -> headers
+                // .frameOptions(frameOptions -> frameOptions
+                // .sameOrigin())
+                // ).sessionManagement((session) -> session
+                // .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                ).exceptionHandling((exception) -> exception.accessDeniedPage("/denegado"))
+                .formLogin((formLogin) -> formLogin
+                                .loginPage("/login")
+                                // .defaultSuccessUrl("/")
+                                .permitAll())
+                .oauth2Login((oauthlogin) -> oauthlogin
+                                .loginPage("/login")
+                                .defaultSuccessUrl("/")
+                                .permitAll())
+                                
+                // ).rememberMe(
+                // Customizer.withDefaults()
+                .logout((logout) -> logout
                                 .invalidateHttpSession(true)
                                 .logoutSuccessUrl("/")
-                                // .deleteCookies("JSESSIONID") // no es necesario, JSESSIONID se hace por defecto
-                                .permitAll()                                
-                        ).csrf((protection) -> protection
-                                 .disable()
-                        // ).cors((protection)-> protection
-                        //          .disable()
-                        ).build();
+                                // .deleteCookies("JSESSIONID") // no es necesario, JSESSIONID se hace
+                                // por defecto
+                                .permitAll())
+                .csrf((protection) -> protection
+                                .disable()
+                // ).cors((protection)-> protection
+                // .disable()
+                ).build();
 
         }
 }
